@@ -74,19 +74,17 @@ function OnWorldPreUpdate()
     end
   else
 	if GameGetFrameNum() == 240 and nameseed ~= "" then GamePrintImportant(nameseed .. " = " .. current_seed) end
-	if GameGetFrameNum() > 240 and seed_gui.active then
-		if seed_gui.active then
-			GuiStartFrame(seed_gui.gui);
-			GuiColorSetForNextWidget(seed_gui.gui, 1, 1, 1, 1)
-			GuiText(seed_gui.gui,
-				10,
-				seed_gui.fromTop,
-				"Name: " .. seed_gui.name)
-			GuiText(seed_gui.gui,
-				10,
-				seed_gui.fromTop + 10,
-				"Seed: " .. seed_gui.seed)
-		end
+	if GameGetFrameNum() > 240 and (GameGetFrameNum() < 3600 or seed_gui.active) then
+		GuiStartFrame(seed_gui.gui);
+		GuiColorSetForNextWidget(seed_gui.gui, 1, 1, 1, 1)
+		GuiText(seed_gui.gui,
+			10,
+			seed_gui.fromTop,
+			"Name: " .. seed_gui.name)
+		GuiText(seed_gui.gui,
+			10,
+			seed_gui.fromTop + 10,
+			"Seed: " .. seed_gui.seed)
 	end
   end
 end
