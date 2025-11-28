@@ -7,7 +7,6 @@ nameseed =  ModSettingGet( "seed_changer.nameseed" )
 local seed_gui = {
 	gui = GuiCreate()
 }
---seed_gui.gui.gui_id = 9500
 
 if not ModSettingSet then
   stored_seed = retrieve_int("seed_changer_seed", 32)
