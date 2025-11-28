@@ -4,6 +4,10 @@ config_time = 0
 button_hidden = false
 stored_seed = 0
 nameseed =  ModSettingGet( "seed_changer.nameseed" )
+local seed_gui = {
+	gui = GuiCreate()
+}
+--seed_gui.gui.gui_id = 9500
 
 if not ModSettingSet then
   stored_seed = retrieve_int("seed_changer_seed", 32)
@@ -51,6 +55,11 @@ else
   ModMagicNumbersFileAdd("mods/seed_changer/files/magic_numbers.xml")
 end
 
+function OnPausedChanged(is_paused, is_inventory_pause)
+	seed_gui.active = (not (not ModSettingGet("seed_changer.guiSetting")))
+	seed_gui.fromTop = ModSettingGet("seed_changer.guiHeight")
+end
+
 function OnWorldPreUpdate()
   if not ModSettingSet then
     if(GameGetFrameNum() > 30)then
@@ -64,10 +73,32 @@ function OnWorldPreUpdate()
       end
     end
   else
-	if GameGetFrameNum() == 300 and nameseed ~= "" then GamePrintImportant(nameseed .. " = " .. current_seed) end
+	if GameGetFrameNum() == 240 and nameseed ~= "" then GamePrintImportant(nameseed .. " = " .. current_seed) end
+	if GameGetFrameNum() > 240 and seed_gui.active then
+		if seed_gui.active then
+			GuiStartFrame(seed_gui.gui);
+			GuiColorSetForNextWidget(seed_gui.gui, 1, 1, 1, 1)
+			GuiText(seed_gui.gui,
+				10,
+				seed_gui.fromTop,
+				"Name: " .. seed_gui.name)
+			GuiText(seed_gui.gui,
+				10,
+				seed_gui.fromTop + 10,
+				"Seed: " .. seed_gui.seed)
+		end
+	end
   end
 end
 
 function OnPlayerSpawned(player)
   print("Our new world seed = "..current_seed)
+  seed_gui = {
+	gui = seed_gui.gui,
+	active = ModSettingGet("seed_changer.guiSetting"),
+	screen_width, screen_height = GuiGetScreenDimensions(seed_gui.gui),
+	fromTop = ModSettingGet("seed_changer.guiHeight"),
+	name = nameseed,
+	seed = tostring(current_seed),
+}
 end
