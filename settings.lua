@@ -32,7 +32,7 @@ mod_settings =
 	{
 		id = "nameseed",
 		ui_name = "World seed from name",
-		ui_description = "Use text to create a unique seed (overrides number).",
+		ui_description = "Use text to create a unique seed.",
 		value_default = "",
 		scope = MOD_SETTING_SCOPE_RUNTIME,
 		text_max_length = 30,
@@ -49,12 +49,11 @@ mod_settings =
 		id = "guiHeight",
 		ui_name = "Display height",
 		ui_description = "Number of pixels from the top to display seed.",
-		value_default = "80",
+		value_default = "40",
 		scope = MOD_SETTING_SCOPE_RUNTIME,
 		text_max_length = 3,
 		allowed_characters = "0123456789",
 	},
-	
 }
 
 -- This function is called to ensure the correct setting values are visible to the game. your mod's settings don't work if you don't have a function like this defined in settings.lua.
